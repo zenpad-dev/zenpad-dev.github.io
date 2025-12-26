@@ -1,61 +1,131 @@
 import { motion } from "framer-motion";
-import { Keyboard } from "lucide-react";
+import { Keyboard, Search, Command } from "lucide-react";
+import { useState } from "react";
 
-const shortcuts = [
-    { key: "Ctrl + P", action: "Quick Open File" },
-    { key: "Ctrl + S", action: "Save File" },
-    { key: "Ctrl + W", action: "Close Tab" },
-    { key: "Ctrl + Shift + F", action: "Global Search" },
-    { key: "Ctrl + B", action: "Toggle Sidebar" },
-    { key: "Ctrl + /", action: "Toggle Comment" },
-    { key: "Ctrl + D", action: "Select Next Occurrence" },
-    { key: "Alt + Up/Down", action: "Move Line" },
-    { key: "Ctrl + `", action: "Toggle Terminal" },
-    { key: "Ctrl + K Z", action: "Zen Mode" },
+const allShortcuts = [
+    // File Operations
+    { key: "Ctrl + N", action: "New Tab", category: "File Operations" },
+    { key: "Ctrl + Shift + N", action: "New Window", category: "File Operations" },
+    { key: "Ctrl + O", action: "Open File", category: "File Operations" },
+    { key: "Ctrl + S", action: "Save", category: "File Operations" },
+    { key: "Ctrl + Shift + S", action: "Save As", category: "File Operations" },
+    { key: "Ctrl + W", action: "Close Tab", category: "File Operations" },
+    { key: "Ctrl + Shift + T", action: "Reopen Closed Tab", category: "File Operations" },
+    { key: "Ctrl + Q", action: "Quit", category: "File Operations" },
+    { key: "Ctrl + ,", action: "Preferences", category: "File Operations" },
+
+    // Editing
+    { key: "Ctrl + Z", action: "Undo", category: "Editing" },
+    { key: "Ctrl + Y", action: "Redo", category: "Editing" },
+    { key: "Ctrl + X", action: "Cut", category: "Editing" },
+    { key: "Ctrl + C", action: "Copy", category: "Editing" },
+    { key: "Ctrl + V", action: "Paste", category: "Editing" },
+    { key: "Ctrl + A", action: "Select All", category: "Editing" },
+    { key: "Ctrl + Shift + K", action: "Delete Line", category: "Editing" },
+    { key: "Ctrl + D", action: "Duplicate Line", category: "Editing" },
+    { key: "Ctrl + Up", action: "Move Line Up", category: "Editing" },
+    { key: "Ctrl + Down", action: "Move Line Down", category: "Editing" },
+    { key: "Ctrl + /", action: "Toggle Comment", category: "Editing" },
+    { key: "Ctrl + I", action: "Indent", category: "Editing" },
+    { key: "Ctrl + U", action: "Unindent", category: "Editing" },
+    { key: "Ctrl + Shift + U", action: "To Uppercase", category: "Editing" },
+    { key: "Ctrl + Shift + L", action: "To Lowercase", category: "Editing" },
+
+    // Search & Navigation
+    { key: "Ctrl + F", action: "Find", category: "Search & Navigation" },
+    { key: "Ctrl + R", action: "Find & Replace", category: "Search & Navigation" },
+    { key: "Ctrl + G", action: "Find Next", category: "Search & Navigation" },
+    { key: "Ctrl + Shift + G", action: "Find Previous", category: "Search & Navigation" },
+    { key: "Ctrl + L", action: "Go to Line", category: "Search & Navigation" },
+    { key: "Ctrl + Page Down", action: "Next Tab", category: "Search & Navigation" },
+    { key: "Ctrl + Page Up", action: "Previous Tab", category: "Search & Navigation" },
+
+    // View
+    { key: "Ctrl + +", action: "Zoom In", category: "View" },
+    { key: "Ctrl + -", action: "Zoom Out", category: "View" },
+    { key: "Ctrl + 0", action: "Reset Zoom", category: "View" },
+    { key: "F11", action: "Fullscreen", category: "View" },
+    { key: "Ctrl + M", action: "Toggle Menubar", category: "View" },
 ];
 
 export function ShortcutsPage() {
+    const [search, setSearch] = useState("");
+
+    const filteredShortcuts = allShortcuts.filter(s =>
+        s.action.toLowerCase().includes(search.toLowerCase()) ||
+        s.key.toLowerCase().includes(search.toLowerCase()) ||
+        s.category.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const categories = Array.from(new Set(filteredShortcuts.map(s => s.category)));
+
     return (
-        <div className="container mx-auto px-4 py-24 max-w-4xl">
+        <div className="container mx-auto px-4 py-24 max-w-5xl text-center md:text-left">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-12"
             >
-                <div className="text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        Master the <span className="text-primary text-glow">Keyboard</span>
-                    </h1>
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Zenpad is designed to be used without a mouse. Learn these shortcuts to become a power user.
-                    </p>
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
+                    <div>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-white to-white/50 bg-clip-text text-transparent">
+                            Keyboard Shortcuts
+                        </h1>
+                        <p className="text-lg text-muted-foreground">
+                            Master Zenpad with these essential bindings.
+                        </p>
+                    </div>
+
+                    <div className="relative w-full md:w-auto">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <input
+                            type="text"
+                            placeholder="Search shortcuts..."
+                            className="w-full md:w-64 h-10 pl-10 pr-4 rounded-full bg-white/5 border border-white/10 focus:border-primary/50 focus:bg-white/10 outline-none transition-all text-sm"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {shortcuts.map((shortcut, index) => (
-                        <motion.div
-                            key={shortcut.key}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: index * 0.05 }}
-                            className="glass p-4 rounded-lg flex items-center justify-between group hover:bg-white/10 transition-colors"
-                        >
-                            <span className="text-muted-foreground font-medium group-hover:text-foreground transition-colors">
-                                {shortcut.action}
-                            </span>
-                            <kbd className="px-3 py-1.5 rounded-md bg-secondary text-sm font-mono text-primary font-bold shadow-sm border border-white/5">
-                                {shortcut.key}
-                            </kbd>
-                        </motion.div>
-                    ))}
-                </div>
-
-                <div className="text-center p-8 rounded-xl bg-primary/5 border border-primary/20">
-                    <Keyboard className="w-8 h-8 text-primary mx-auto mb-4" />
-                    <p className="text-sm text-muted-foreground">
-                        You can customize these keybindings in your <code className="text-primary">settings.json</code> file.
-                    </p>
-                </div>
+                {categories.length === 0 ? (
+                    <div className="text-center py-20 opacity-50">
+                        <Command className="w-12 h-12 mx-auto mb-4" />
+                        <p>No shortcuts found matching "{search}"</p>
+                    </div>
+                ) : (
+                    <div className="grid gap-12">
+                        {categories.map((category) => (
+                            <div key={category}>
+                                <h3 className="text-sm font-bold text-primary mb-4 uppercase tracking-wider pl-1">{category}</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {filteredShortcuts.filter(s => s.category === category).map((shortcut) => (
+                                        <motion.div
+                                            layout
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            key={shortcut.key + shortcut.action}
+                                            className="group p-4 rounded-xl border border-white/5 bg-white/5 hover:border-primary/20 hover:bg-white/10 transition-all cursor-default relative overflow-hidden"
+                                        >
+                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <div className="relative flex justify-between items-start">
+                                                <span className="font-medium text-foreground/90 text-sm">{shortcut.action}</span>
+                                                <Keyboard className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            </div>
+                                            <div className="mt-4 flex gap-1 justify-end flex-wrap">
+                                                {shortcut.key.split(' ').map((k, i) => (
+                                                    <kbd key={i} className="px-2 py-1 min-w-[1.5rem] text-center rounded text-xs font-bold font-mono bg-black/40 border-b-2 border-white/10 text-primary whitespace-nowrap">
+                                                        {k}
+                                                    </kbd>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </motion.div>
         </div>
     );

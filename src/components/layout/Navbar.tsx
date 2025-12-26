@@ -7,8 +7,9 @@ export function Navbar() {
     const location = useLocation();
 
     const links = [
-        { name: "Docs", href: "/docs" },
-        { name: "Shortcuts", href: "/shortcuts" },
+        { name: "About", path: "/about" },
+        { name: "Docs", path: "/docs" },
+        { name: "Shortcuts", path: "/shortcuts" },
     ];
 
     return (
@@ -30,14 +31,14 @@ export function Navbar() {
                     {links.map((link) => (
                         <Link
                             key={link.name}
-                            to={link.href}
+                            to={link.path}
                             className={cn(
                                 "text-sm font-medium transition-colors hover:text-primary relative",
-                                location.pathname === link.href ? "text-primary" : "text-muted-foreground"
+                                location.pathname === link.path ? "text-primary" : "text-muted-foreground"
                             )}
                         >
                             {link.name}
-                            {location.pathname === link.href && (
+                            {location.pathname === link.path && (
                                 <motion.div
                                     layoutId="navbar-indicator"
                                     className="absolute -bottom-[21px] left-0 right-0 h-0.5 bg-primary"
