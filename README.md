@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Zenpad Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the source code for the official Zenpad website and documentation. Note that this is purely the frontend showcase; the actual editor source code is hosted in a separate repository.
 
-Currently, two official plugins are available:
+## Live Website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://jagdishtripathy.github.io/zenpad-web
 
-## React Compiler
+## Repository Contents
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Landing Page**: Product showcase with features and screenshots.
+*   **Documentation**: User guides, installation instructions, and configuration details.
+*   **Keyboard Shortcuts**: Searchable reference for editor keybindings.
+*   **About**: Project philosophy and background.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+*   **Core**: React 19, TypeScript, Vite
+*   **Styling**: Tailwind CSS
+*   **Animations**: Framer Motion
+*   **Components**: Radix UI
+*   **Routing**: React Router (HashRouter)
+*   **Deployment**: GitHub Pages
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Local Development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/jagdishtripathy/zenpad-web.git
+    cd zenpad-web
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run development server**
+    ```bash
+    npm run dev
+    ```
+
+## Project Structure
+
+```
+src/
+├── components/     # UI components (Layout, Sections, primitives)
+├── lib/           # Utilities and helpers
+├── pages/         # Route components (Home, Docs, Shortcuts)
+├── App.tsx        # Main application entry and routing
+└── main.tsx       # React DOM rendering
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project is configured for automated deployment to GitHub Pages using GitHub Actions. Pushing to the `main` branch triggers the build workflow defined in `.github/workflows/deploy.yml`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Related Repositories
+
+*   **Zenpad Editor**: [https://github.com/jagdishtripathy/zenpad](https://github.com/jagdishtripathy/zenpad) - The core text editor application (Python/GTK).
+
+## License
+
+This project is licensed under the GPL-2.0 License.
