@@ -2,7 +2,7 @@
   "name": "zenpad.github.io",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://zenpad.github.io",
+  "homepage": "https://jagdishtripathy.github.io/zenpad-web",
   "type": "module",
   "scripts": {
     "dev": "vite",
