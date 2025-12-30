@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DownloadDialog } from "@/components/ui/DownloadDialog";
 
 export function Hero() {
-    const { release, loading } = useLatestRelease();
+    const { release, loading, error } = useLatestRelease();
     const [showDownloadModal, setShowDownloadModal] = useState(false);
 
     const handleDownload = () => {
@@ -34,9 +34,9 @@ export function Hero() {
                     transition={{ duration: 0.5 }}
                     className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono mb-8 text-primary shadow-lg shadow-primary/10 backdrop-blur-md"
                 >
-                    <span className="flex h-2 w-2 rounded-full bg-primary animate-ping" />
+                    <span className={`flex h-2 w-2 rounded-full ${error ? 'bg-amber-500' : 'bg-primary'} animate-ping`} />
                     <span className="font-bold">
-                        {loading ? "Checking functionality..." : `${release?.version || "v1.0.0"} Now Available`}
+                        {loading ? "Checking latest..." : error ? "Latest Release" : `${release?.version || "v1.0.0"} Now Available`}
                     </span>
                     <span className="text-muted-foreground hidden sm:inline px-1">•</span>
                     <span className="text-white">Linux Dedicated</span>
@@ -88,7 +88,7 @@ export function Hero() {
                         to="/docs"
                         className="h-14 px-8 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-foreground font-medium flex items-center gap-2 transition-all backdrop-blur-sm"
                     >
-                        Reading Documentation
+                        Read Docs
                         <ArrowRight className="w-4 h-4" />
                     </Link>
                 </motion.div>

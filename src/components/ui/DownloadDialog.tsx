@@ -41,7 +41,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                                 initial={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%", marginTop: 20 }}
                                 animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", marginTop: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%", marginTop: 20 }}
-                                transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
+                                transition={{ type: "spring", duration: 0.9, bounce: 0.3 }}
                                 className="fixed left-1/2 top-1/2 w-full max-w-sm bg-[#111] border border-white/10 rounded-2xl shadow-2xl z-50 p-8 focus:outline-none overflow-hidden"
                             >
                                 {/* Decorative Glow */}
