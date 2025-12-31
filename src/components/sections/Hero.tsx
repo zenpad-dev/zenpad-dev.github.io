@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLatestRelease } from "@/hooks/useLatestRelease";
 import { useState } from "react";
 import { DownloadDialog } from "@/components/ui/DownloadDialog";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export function Hero() {
     const { release, loading, error } = useLatestRelease();
@@ -38,15 +39,14 @@ export function Hero() {
                     <span className="font-bold">
                         {loading ? "Checking latest..." : error ? "Latest Release" : `${release?.version || "v1.0.0"} Now Available`}
                     </span>
-                    <span className="text-muted-foreground hidden sm:inline px-1">•</span>
-                    <span className="text-white">Linux Dedicated</span>
+                    <span className="text-muted-foreground mr-1">Linux Dedicated</span>
                 </motion.div>
 
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 bg-gradient-to-b from-white via-white to-white/50 bg-clip-text text-transparent drop-shadow-2xl"
+                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8 bg-gradient-to-b from-black/80 via-black to-black/40 dark:from-white dark:via-white dark:to-white/50 bg-clip-text text-transparent drop-shadow-2xl"
                 >
                     Code with <br className="hidden md:block" />
                     <span className="bg-gradient-to-r from-primary via-purple-500 to-blue-500 bg-clip-text text-transparent animate-text-shimmer bg-[length:200%_auto]">
@@ -68,14 +68,11 @@ export function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="flex flex-col sm:flex-row items-center gap-4"
+                    className="flex flex-col sm:flex-row items-center gap-6"
                 >
-                    <a
-                        href={release?.downloadUrl || "https://github.com/jagdishtripathy/zenpad/releases"}
-                        className="h-14 px-8 rounded-full bg-primary text-white font-bold tracking-wide flex items-center gap-2 hover:bg-primary/90 hover:scale-105 transition-all shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <MagneticButton
                         onClick={handleDownload}
+                        className="h-16 px-10 rounded-full bg-primary text-white font-bold tracking-wide flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed border border-black/10 dark:border-white/10"
                     >
                         {loading ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -83,13 +80,13 @@ export function Hero() {
                             <Terminal className="w-5 h-5" />
                         )}
                         {loading ? "Fetching Latest..." : "Download .deb"}
-                    </a>
-                    <Link
-                        to="/docs"
-                        className="h-14 px-8 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-foreground font-medium flex items-center gap-2 transition-all backdrop-blur-sm"
-                    >
-                        Read Docs
-                        <ArrowRight className="w-4 h-4" />
+                    </MagneticButton>
+
+                    <Link to="/docs">
+                        <MagneticButton className="h-16 px-10 rounded-full border border-black/10 dark:border-white/10 bg-secondary/10 dark:bg-white/5 hover:bg-secondary/20 dark:hover:bg-white/10 text-foreground font-medium flex items-center gap-2 transition-all backdrop-blur-sm">
+                            Read Docs
+                            <ArrowRight className="w-4 h-4" />
+                        </MagneticButton>
                     </Link>
                 </motion.div>
 

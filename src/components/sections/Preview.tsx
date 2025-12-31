@@ -249,149 +249,155 @@ export function Preview() {
                 </div>
 
                 <motion.div
-                    layout
-                    initial={{ width: 600, height: 400, borderRadius: 12 }}
-                    animate={{
-                        width: phase === "editor" ? "100%" : 600,
-                        height: phase === "editor" ? 500 : 350,
-                        backgroundColor: phase === "editor" ? "#fbfbfb" : "#0f0f0f",
-                        borderColor: phase === "editor" ? "#d4d4d4" : "rgba(255,255,255,0.1)"
-                    }}
-                    transition={{ duration: 1.5, type: "spring", bounce: 0.2 }}
-                    className="mx-auto rounded-xl overflow-hidden flex flex-col relative shadow-2xl"
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+                    className="w-full flex justify-center"
                 >
-                    <AnimatePresence mode="wait">
-                        {phase === "terminal" ? (
-                            <motion.div
-                                key="terminal-content"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="flex flex-col h-full bg-black/90"
-                            >
-                                {/* Terminal Title Bar */}
-                                <div className="h-8 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2">
-                                    <div className="flex gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                        <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                                    </div>
-                                    <div className="ml-4 text-xs font-mono text-muted-foreground/50">
-                                        bash
-                                    </div>
-                                </div>
-
-                                {/* Terminal Body */}
-                                <div className="p-6 font-mono text-sm md:text-base flex-1">
-                                    <div className="text-green-500">
-                                        <span className="text-blue-400">user@linux:~$</span> {typedText}
-                                        <motion.span
-                                            animate={{ opacity: [1, 0] }}
-                                            transition={{ repeat: Infinity, duration: 0.8 }}
-                                            className="inline-block w-2.5 h-5 bg-green-500 align-middle ml-1"
-                                        />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ) : phase === "editor" ? (
-                            <motion.div
-                                key="editor-content"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.4 }}
-                                className="flex flex-col h-full font-sans text-sm text-[#2e3436] bg-[#f2f2f2]"
-                            >
-                                {/* GTK Header Bar */}
-                                <div className="h-10 bg-[#e8e8e7] border-b border-[#dadada] flex items-center justify-between px-4 select-none">
-                                    <div className="w-16" /> {/* Spacer for centering */}
-                                    <span className="font-bold text-[#2e3436] drop-shadow-sm">Zenpad</span>
-                                    <div className="flex gap-4 text-[#5e5c64]">
-                                        <Minus className="w-3 h-3" />
-                                        <Square className="w-3 h-3" />
-                                        <X className="w-3 h-3" />
-                                    </div>
-                                </div>
-
-                                {/* Menu Bar */}
-                                <div className="h-7 bg-[#f6f5f4] border-b border-[#dadada] flex items-center px-2 gap-4 text-xs text-[#2e3436]">
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">File</span>
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Edit</span>
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Search</span>
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">View</span>
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Document</span>
-                                    <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Help</span>
-                                </div>
-
-                                {/* Toolbar */}
-                                <div className="h-10 bg-[#f6f5f4] border-b border-[#dadada] flex items-center px-2 gap-1 text-[#5e5c64]">
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><FilePlus className="w-4 h-4" /></button>
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><FolderOpen className="w-4 h-4" /></button>
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Download className="w-4 h-4" /></button>
-                                    <div className="w-px h-5 bg-[#dadada] mx-1" />
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Undo className="w-4 h-4" /></button>
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Redo className="w-4 h-4" /></button>
-                                    <div className="w-px h-5 bg-[#dadada] mx-1" />
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Scissors className="w-4 h-4" /></button>
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Copy className="w-4 h-4" /></button>
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Clipboard className="w-4 h-4" /></button>
-                                    <div className="w-px h-5 bg-[#dadada] mx-1" />
-                                    <button className="p-1.5 hover:bg-black/5 rounded"><Search className="w-4 h-4" /></button>
-                                </div>
-
-                                {/* Tabs */}
-                                <div className="h-8 bg-[#e1e1e1] flex items-end px-1 gap-1 border-b border-[#dadada]">
-                                    <div className="bg-[#ffffff] px-3 py-1.5 rounded-t-md text-xs font-medium flex items-center gap-2 border-l border-r border-t border-[#cecece] relative top-px">
-                                        <span>{current.file}</span>
-                                        <X className="w-3 h-3 hover:bg-black/10 rounded-full p-0.5 cursor-pointer" />
-                                        <div className={`absolute bottom-0 left-0 right-0 h-0.5 ${current.color}`} />
-                                    </div>
-                                    <div className="px-3 py-1.5 text-xs font-medium text-[#5e5c64] hover:bg-[#eaeaea] rounded-t-md cursor-pointer flex items-center gap-2">
-                                        <X className="w-3 h-3 opacity-0 group-hover:opacity-100" />
-                                    </div>
-                                </div>
-
-                                {/* Main Editor Area */}
-                                <div className="flex-1 flex bg-white overflow-hidden">
-                                    {/* Line Numbers */}
-                                    <div className="w-10 bg-[#f3f3f3] border-r border-[#efefef] flex flex-col items-end pr-2 pt-2 text-[#b0b0b0] font-mono text-xs select-none">
-                                        {editorLines.length > 0 ? editorLines.map((_, i) => (
-                                            <div key={i} className="leading-6">{i + 1}</div>
-                                        )) : <div className="leading-6">1</div>}
+                    <motion.div
+                        layout
+                        initial={{ width: "min(600px, 90vw)", height: 400, borderRadius: 12 }}
+                        animate={{
+                            width: phase === "editor" ? "100%" : "min(600px, 90vw)",
+                            height: phase === "editor" ? 500 : 350,
+                            backgroundColor: phase === "editor" ? "#fbfbfb" : "#0f0f0f",
+                            borderColor: phase === "editor" ? "#d4d4d4" : "rgba(255,255,255,0.1)"
+                        }}
+                        transition={{ duration: 1.5, type: "spring", bounce: 0.2 }}
+                        className="rounded-xl overflow-hidden flex flex-col relative shadow-2xl"
+                    >
+                        <AnimatePresence mode="wait">
+                            {phase === "terminal" ? (
+                                <motion.div
+                                    key="terminal-content"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="flex flex-col h-full bg-black/90"
+                                >
+                                    {/* Terminal Title Bar */}
+                                    <div className="h-8 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2">
+                                        <div className="flex gap-2">
+                                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                                        </div>
+                                        <div className="ml-4 text-xs font-mono text-muted-foreground/50">
+                                            bash
+                                        </div>
                                     </div>
 
-                                    {/* Code Content */}
-                                    <div className="flex-1 p-2 font-mono text-sm overflow-auto text-left">
-                                        {editorLines.map((line, i) => (
-                                            <div key={i} className="leading-6 whitespace-pre relative">
-                                                {highlightCode(line)}
-                                                {i === editorLines.length - 1 && (
-                                                    <motion.span
-                                                        animate={{ opacity: [1, 0] }}
-                                                        transition={{ repeat: Infinity, duration: 0.8 }}
-                                                        className="absolute inline-block w-0.5 h-4 bg-black align-middle ml-0.5 top-1"
-                                                    />
-                                                )}
-                                            </div>
-                                        ))}
+                                    {/* Terminal Body */}
+                                    <div className="p-6 font-mono text-sm md:text-base flex-1">
+                                        <div className="text-green-500">
+                                            <span className="text-blue-400">user@linux:~$</span> {typedText}
+                                            <motion.span
+                                                animate={{ opacity: [1, 0] }}
+                                                transition={{ repeat: Infinity, duration: 0.8 }}
+                                                className="inline-block w-2.5 h-5 bg-green-500 align-middle ml-1"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                </motion.div>
+                            ) : phase === "editor" ? (
+                                <motion.div
+                                    key="editor-content"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="flex flex-col h-full font-sans text-sm text-[#2e3436] bg-[#f2f2f2]"
+                                >
+                                    {/* GTK Header Bar */}
+                                    <div className="h-10 bg-[#e8e8e7] border-b border-[#dadada] flex items-center justify-between px-4 select-none">
+                                        <div className="w-16" /> {/* Spacer for centering */}
+                                        <span className="font-bold text-[#2e3436] drop-shadow-sm">Zenpad</span>
+                                        <div className="flex gap-4 text-[#5e5c64]">
+                                            <Minus className="w-3 h-3" />
+                                            <Square className="w-3 h-3" />
+                                            <X className="w-3 h-3" />
+                                        </div>
+                                    </div>
 
-                                {/* Status Bar */}
-                                <div className="h-6 bg-[#f6f5f4] border-t border-[#dadada] flex items-center px-4 text-[11px] text-[#5e5c64] justify-between">
-                                    <span>{current.lang}</span>
-                                    <span>Ln {cursorPos.line}, Col {cursorPos.col}</span>
-                                </div>
+                                    {/* Menu Bar */}
+                                    <div className="h-7 bg-[#f6f5f4] border-b border-[#dadada] flex items-center px-2 gap-4 text-xs text-[#2e3436]">
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">File</span>
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Edit</span>
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Search</span>
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">View</span>
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Document</span>
+                                        <span className="cursor-pointer hover:bg-black/5 px-2 py-1 rounded">Help</span>
+                                    </div>
 
-                            </motion.div>
-                        ) : (
-                            // Reset state (Empty container while switching)
-                            <motion.div
-                                key="reset-content"
-                                className="w-full h-full bg-black/90"
-                            />
-                        )}
-                    </AnimatePresence>
+                                    {/* Toolbar */}
+                                    <div className="h-10 bg-[#f6f5f4] border-b border-[#dadada] flex items-center px-2 gap-1 text-[#5e5c64]">
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><FilePlus className="w-4 h-4" /></button>
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><FolderOpen className="w-4 h-4" /></button>
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Download className="w-4 h-4" /></button>
+                                        <div className="w-px h-5 bg-[#dadada] mx-1" />
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Undo className="w-4 h-4" /></button>
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Redo className="w-4 h-4" /></button>
+                                        <div className="w-px h-5 bg-[#dadada] mx-1" />
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Scissors className="w-4 h-4" /></button>
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Copy className="w-4 h-4" /></button>
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Clipboard className="w-4 h-4" /></button>
+                                        <div className="w-px h-5 bg-[#dadada] mx-1" />
+                                        <button className="p-1.5 hover:bg-black/5 rounded"><Search className="w-4 h-4" /></button>
+                                    </div>
+
+                                    {/* Tabs */}
+                                    <div className="h-8 bg-[#e1e1e1] flex items-end px-1 gap-1 border-b border-[#dadada]">
+                                        <div className="bg-[#ffffff] px-3 py-1.5 rounded-t-md text-xs font-medium flex items-center gap-2 border-l border-r border-t border-[#cecece] relative top-px">
+                                            <span>{current.file}</span>
+                                            <X className="w-3 h-3 hover:bg-black/10 rounded-full p-0.5 cursor-pointer" />
+                                            <div className={`absolute bottom-0 left-0 right-0 h-0.5 ${current.color}`} />
+                                        </div>
+                                        <div className="px-3 py-1.5 text-xs font-medium text-[#5e5c64] hover:bg-[#eaeaea] rounded-t-md cursor-pointer flex items-center gap-2">
+                                            <X className="w-3 h-3 opacity-0 group-hover:opacity-100" />
+                                        </div>
+                                    </div>
+
+                                    {/* Main Editor Area */}
+                                    <div className="flex-1 flex bg-white overflow-hidden">
+                                        {/* Line Numbers */}
+                                        <div className="w-10 bg-[#f3f3f3] border-r border-[#efefef] flex flex-col items-end pr-2 pt-2 text-[#b0b0b0] font-mono text-xs select-none">
+                                            {editorLines.length > 0 ? editorLines.map((_, i) => (
+                                                <div key={i} className="leading-6">{i + 1}</div>
+                                            )) : <div className="leading-6">1</div>}
+                                        </div>
+
+                                        {/* Code Content */}
+                                        <div className="flex-1 p-2 font-mono text-sm overflow-auto text-left">
+                                            {editorLines.map((line, i) => (
+                                                <div key={i} className="leading-6 whitespace-pre relative">
+                                                    {highlightCode(line)}
+                                                    {i === editorLines.length - 1 && (
+                                                        <motion.span
+                                                            animate={{ opacity: [1, 0] }}
+                                                            transition={{ repeat: Infinity, duration: 0.8 }}
+                                                            className="absolute inline-block w-0.5 h-4 bg-black align-middle ml-0.5 top-1"
+                                                        />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Status Bar */}
+                                    <div className="h-6 bg-[#f6f5f4] border-t border-[#dadada] flex items-center px-4 text-[11px] text-[#5e5c64] justify-between">
+                                        <span>{current.lang}</span>
+                                        <span>Ln {cursorPos.line}, Col {cursorPos.col}</span>
+                                    </div>
+
+                                </motion.div>
+                            ) : (
+                                // Reset state (Empty container while switching)
+                                <motion.div
+                                    key="reset-content"
+                                    className="w-full h-full bg-black/90"
+                                />
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
                 </motion.div>
             </div>
         </section>

@@ -7,20 +7,27 @@ import { AboutPage } from "@/pages/About";
 import { ShortcutsPage } from "@/pages/Shortcuts";
 import { NotFoundPage } from "@/pages/NotFound";
 
+import { ThemeProvider } from "@/components/theme-provider";
+import { ReactLenis } from "lenis/react";
+
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/docs" element={<DocsPage />} />
-          <Route path="/shortcuts" element={<ShortcutsPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <ThemeProvider defaultTheme="dark" storageKey="zenpad-theme">
+      <ReactLenis root>
+        <Router>
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/docs" element={<DocsPage />} />
+              <Route path="/shortcuts" element={<ShortcutsPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </ReactLenis>
+    </ThemeProvider>
   );
 }
 

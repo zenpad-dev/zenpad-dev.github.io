@@ -4,13 +4,35 @@
 
 @layer base {
   :root {
-    /* Vibrant Dark Theme */
+    /* Light Mode - Clean & Crisp */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    /* Vivid Violet for Light Mode - Slightly Darker for Contrast */
+    --primary: 263 70% 45%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 90%;
+    /* Darker gray for better button visibility */
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 263 70% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 263 70% 50%;
+  }
+
+  .dark {
+    /* Dark Mode - Existing Vibrant Theme */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
-    /* Electric Violet / Neon Blue Accent */
     --primary: 263 70% 65%;
-    /* Vivid Purple */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 240 4% 16%;
@@ -18,7 +40,6 @@
 
     --muted: 240 4% 16%;
     --muted-foreground: 240 5% 84%;
-    /* Lighter for better visibility */
 
     --accent: 263 70% 65%;
     --accent-foreground: 210 40% 98%;
@@ -35,7 +56,7 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-white;
+    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-white transition-colors duration-300 ease-in-out;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -45,7 +66,8 @@
     text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
   }
 
+  /* Adaptive Glass */
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/50 backdrop-blur-xl border border-black/5 dark:bg-white/5 dark:border-white/10;
   }
 }

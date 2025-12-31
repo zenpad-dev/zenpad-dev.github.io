@@ -3,6 +3,7 @@ import { Github, FileText, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Navbar() {
     const location = useLocation();
@@ -21,16 +22,16 @@ export function Navbar() {
             transition={{ duration: 0.5 }}
             className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl"
         >
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link to="/" className="flex items-center gap-2 group" onClick={() => setIsOpen(false)}>
+            <div className="container mx-auto px-4 h-16 flex items-center gap-8">
+                <Link to="/" className="flex items-center gap-2 group mr-4" onClick={() => setIsOpen(false)}>
                     <div className="p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                         <FileText className="w-5 h-5 text-primary" />
                     </div>
                     <span className="font-mono font-bold text-lg tracking-tight group-hover:text-primary transition-colors">Zenpad</span>
                 </Link>
 
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-8">
+                {/* Desktop Navigation - Left Aligned */}
+                <div className="hidden md:flex items-center gap-6">
                     {links.map((link) => (
                         <Link
                             key={link.name}
@@ -50,21 +51,25 @@ export function Navbar() {
                             )}
                         </Link>
                     ))}
-                    <div className="h-4 w-px bg-white/10" />
+                </div>
+
+                <div className="ml-auto hidden md:flex items-center gap-4">
                     <a
                         href="https://github.com/jagdishtripathy/zenpad"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                        className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                        aria-label="GitHub"
                     >
-                        <Github className="w-4 h-4" />
-                        <span>GitHub</span>
+                        <Github className="w-5 h-5" />
                     </a>
+                    <div className="h-4 w-px bg-border" />
+                    <ThemeToggle />
                 </div>
 
-                {/* Mobile Menu Toggle */}
+                {/* Mobile Menu Toggle (Right Aligned) */}
                 <button
-                    className="md:hidden p-2 text-muted-foreground hover:text-foreground"
+                    className="md:hidden ml-auto p-2 text-muted-foreground hover:text-foreground"
                     onClick={() => setIsOpen(!isOpen)}
                     aria-label={isOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isOpen}
@@ -106,6 +111,10 @@ export function Navbar() {
                                 <Github className="w-4 h-4" />
                                 <span>GitHub</span>
                             </a>
+                            <div className="flex items-center justify-between py-2 text-sm font-medium text-muted-foreground">
+                                <span>Theme</span>
+                                <ThemeToggle />
+                            </div>
                         </div>
                     </motion.div>
                 )}

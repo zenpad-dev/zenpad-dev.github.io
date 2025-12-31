@@ -66,9 +66,9 @@ export function ShortcutsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-12"
             >
-                <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-border pb-8">
                     <div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-white to-white/50 bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
                             Keyboard Shortcuts
                         </h1>
                         <p className="text-lg text-muted-foreground">
@@ -81,7 +81,7 @@ export function ShortcutsPage() {
                         <input
                             type="text"
                             placeholder="Search shortcuts..."
-                            className="w-full md:w-64 h-10 pl-10 pr-4 rounded-full bg-white/5 border border-white/10 focus:border-primary/50 focus:bg-white/10 outline-none transition-all text-sm"
+                            className="w-full md:w-64 h-10 pl-10 pr-4 rounded-full bg-secondary/10 border border-border focus:border-primary/50 focus:bg-secondary/20 outline-none transition-all text-sm text-foreground"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -90,8 +90,8 @@ export function ShortcutsPage() {
 
                 {categories.length === 0 ? (
                     <div className="text-center py-20 opacity-50">
-                        <Command className="w-12 h-12 mx-auto mb-4" />
-                        <p>No shortcuts found matching "{search}"</p>
+                        <Command className="w-12 h-12 mx-auto mb-4 text-foreground" />
+                        <p className="text-muted-foreground">No shortcuts found matching "{search}"</p>
                     </div>
                 ) : (
                     <div className="grid gap-12">
@@ -105,7 +105,7 @@ export function ShortcutsPage() {
                                             initial={{ opacity: 0, scale: 0.95 }}
                                             animate={{ opacity: 1, scale: 1 }}
                                             key={shortcut.key + shortcut.action}
-                                            className="group p-4 rounded-xl border border-white/5 bg-white/5 hover:border-primary/20 hover:bg-white/10 transition-all cursor-default relative overflow-hidden"
+                                            className="group p-4 rounded-xl border border-border bg-secondary/5 hover:border-primary/20 hover:bg-secondary/10 transition-all cursor-default relative overflow-hidden"
                                         >
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative flex justify-between items-start">
@@ -114,7 +114,7 @@ export function ShortcutsPage() {
                                             </div>
                                             <div className="mt-4 flex gap-1 justify-end flex-wrap">
                                                 {shortcut.key.split(' ').map((k, i) => (
-                                                    <kbd key={i} className="px-2 py-1 min-w-[1.5rem] text-center rounded text-xs font-bold font-mono bg-black/40 border-b-2 border-white/10 text-primary whitespace-nowrap">
+                                                    <kbd key={i} className="px-2 py-1 min-w-[1.5rem] text-center rounded text-xs font-bold font-mono bg-background border-b-2 border-border text-primary whitespace-nowrap shadow-sm">
                                                         {k}
                                                     </kbd>
                                                 ))}
