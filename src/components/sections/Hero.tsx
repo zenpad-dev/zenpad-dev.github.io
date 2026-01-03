@@ -11,8 +11,9 @@ export function Hero() {
     const [showDownloadModal, setShowDownloadModal] = useState(false);
 
     const handleDownload = () => {
-        // We let the default link behavior happen (downloading the file)
-        // But we simultaneously show the modal
+        if (release?.downloadUrl) {
+            window.location.href = release.downloadUrl;
+        }
         setShowDownloadModal(true);
     };
 
