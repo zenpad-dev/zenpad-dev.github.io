@@ -73,7 +73,7 @@ export function Hero() {
                 >
                     <MagneticButton
                         onClick={handleDownload}
-                        className="h-16 px-10 rounded-full bg-primary text-white font-bold tracking-wide flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed border border-black/10 dark:border-white/10"
+                        className="h-16 px-10 rounded-full bg-primary text-white font-bold tracking-wide flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed border border-black/10 dark:border-white/10 cursor-pointer"
                     >
                         {loading ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
